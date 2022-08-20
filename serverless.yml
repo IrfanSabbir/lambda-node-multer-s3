@@ -1,0 +1,21 @@
+service: node-image-app
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  memorySize: 256
+
+functions:
+  public-image:
+    handler: server.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /images
+          cors: true
+      - httpApi:
+          method: DELETE
+          path: /delete-image
+          cors: true
+  
